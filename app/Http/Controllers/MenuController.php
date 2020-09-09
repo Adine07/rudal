@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\Category;
+use App\Models\Ingredient;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
     function __construct()
     {
         $this->model = new Menu;
+        $this->imgPath = public_path('img');
     }
     /**
      * Display a listing of the resource.
@@ -31,7 +35,9 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('admin.menu.create');
+        $categories = Category::all();
+
+        return view('admin.menu.create', compact('categories'));
     }
 
     /**
@@ -44,6 +50,9 @@ class MenuController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255',
+            'category_id' => 'required',
+            'detail' => 'required',
+            'image' => 'required',
         ]);
 
         Menu::create($request->all());
@@ -92,11 +101,28 @@ class MenuController extends Controller
     {
         $model = $this->model->find($id);
 
-        Menu::where('category_id', $id)->update([
-            'category_id' => 1,
-        ]);
-
         $model->delete();
         return redirect('/admin/categories');
+    }
+
+    public function uploadImage($img){
+        $img = $request->file('photo');
+        $newName = time() . '.' . $img->getClientOriginalExtension();
+
+        $img->move($this->imgPath, $newName);
+
+        $request->merge([
+            'image' =>$newName,
+        ]);
+
+        return $request;
+    }
+
+    public function removeImage($img){
+        $fullPath = $this->imgPath . '/' . $img;
+
+        if ($img && file_exists($fullPath)){
+            unlink($fullPath);
+        }
     }
 }

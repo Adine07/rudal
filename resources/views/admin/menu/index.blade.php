@@ -1,6 +1,6 @@
 @extends('layouts.dash')
 
-@section('title', 'Categories')
+@section('title', 'Menus')
 
 @section('head-script')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
@@ -43,16 +43,16 @@
                     $no = 1;
                     @endphp
                     <tbody>
-                        @foreach($categories as $category)
+                        @foreach($menus as $menu)
                         <tr>
                             <td> {{ $no++ }} </td>
-                            <td> {{ $category->name }} </td>
-                            <td> {{ $category->status }} </td>
-                            <td> {{ $category->price }} </td>
-                            <td> {{ $category->image }} </td>
+                            <td> {{ $menu->name }} </td>
+                            <td> {{ $menu->status ? 'active' : 'non-active' }} </td>
+                            <td> {{ $menu->price }} </td>
+                            <td> {{ $menu->image }} </td>
                             <td>
-                                <a href="{{ route('admin.categories.edit', ['category' => $category->id]) }}" class="btn btn-warning btn-sm">Edit</a>
-                                <form class="d-inline-block" action="{{ route('admin.categories.destroy', $category->id) }}" method="post">
+                                <a href="{{ route('admin.menus.edit', ['menu' => $menu->id]) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <form class="d-inline-block" action="{{ route('admin.menus.destroy', $menu->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm">Delete</button>

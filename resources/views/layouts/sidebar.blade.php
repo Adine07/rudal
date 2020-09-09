@@ -32,11 +32,11 @@ $menu = [
     'childerns' => [
         [
             'title' => 'List Menus',
-            'url' => '/admin/menu',
+            'url' => '/admin/menus',
         ],
         [
             'title' => 'Create Menu',
-            'url' => '/admin/menu/create',
+            'url' => '/admin/menus/create',
         ],
     ]
 ];
