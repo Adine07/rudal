@@ -7,6 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Ingredient extends Model
 {
     protected $fillable = [
-        'name', 'stock',
+        'ingredient_name', 'stock', 'format',
     ];
+
+    public function Menu()
+    {
+        return $this->belongsToMany('App\Models\Menu');
+    }
+
+    // public function ingredient_menus()
+    // {
+    //     return $this->hasMany(IngredientMenu::class);
+    // }
 }

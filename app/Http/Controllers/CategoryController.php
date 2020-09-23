@@ -46,7 +46,7 @@ class CategoryController extends Controller
             'name' => 'required|max:255',
         ]);
 
-        Category::create($request->all());
+        $this->model->create($request->all());
 
         return redirect('/admin/categories');
     }
@@ -91,12 +91,14 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $model = $this->model->find($id);
-
-        Menu::where('category_id', $id)->update([
-            'category_id' => 1,
-        ]);
-
-        $model->delete();
-        return redirect('/admin/categories');
+        $b = Menu::all();
+        $a = $b->where('category_id', $id);
+        $a = $a->all();
+        if ($a == []) {
+            $model->delete();
+            return redirect('/admin/categories');
+        } else {
+            return redirect('/admin/categories');
+        }
     }
 }

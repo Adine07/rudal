@@ -27,6 +27,15 @@
                 <p class="card-description"> Edit new <code>category</code> for your menus.
                 </p>
                 <hr>
+                @if($errors->any())
+                <hr>
+                <ul>
+                    @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <hr>
+                @endif
                 <form action="{{ route('admin.categories.update', ['category' => $category->id]) }}" method="post">
                     @csrf
                     @method('PUT')

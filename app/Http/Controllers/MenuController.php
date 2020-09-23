@@ -15,6 +15,7 @@ class MenuController extends Controller
     {
         $this->model = new Menu;
         $this->imgPath = public_path('img');
+        $this->ingre = new Ingredient;
     }
     /**
      * Display a listing of the resource.
@@ -36,8 +37,9 @@ class MenuController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $ingredients = Ingredient::all();
 
-        return view('admin.menu.create', compact('categories'));
+        return view('admin.menu.create', compact('categories', 'ingredients'));
     }
 
     /**
@@ -48,14 +50,29 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
+
         $request->validate([
             'name' => 'required|max:255',
             'category_id' => 'required',
             'detail' => 'required',
-            'image' => 'required',
+            'photo' => 'required',
+            'ingredient_id' => 'required',
+            'qty' => 'required',
         ]);
 
-        Menu::create($request->all());
+        if ($request->photo) {
+            $request = $this->uploadImage($request);
+        }
+
+        $menu = $this->model->create($request->all());
+
+        for ($i = 0; $i < count($request->ingredient_id); $i++) {
+            $menu->ingre_menus()->create([
+                'ingredient_id' => $request->ingredient_id[$i],
+                'qty' => $request->qty[$i],
+            ]);
+        }
 
         return redirect('/admin/menus');
     }
@@ -68,9 +85,13 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        $menu = $this->model->find($id);
+        $menu = Menu::with('ingre_menus')->find($id);
+        $ingredients = Ingredient::all();
+        $categories = Category::all();
 
-        return view('admin.menu.edit', compact('menu'));
+        // dd($menu->ingre_menus);
+
+        return view('admin.menu.edit', compact('menu', 'ingredients', 'categories'));
     }
 
     /**
@@ -84,9 +105,28 @@ class MenuController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255',
+            'category_id' => 'required',
+            'detail' => 'required',
+            'ingredient_id' => 'required',
+            'qty' => 'required',
         ]);
 
-        $this->model->find($id)->update($request->all());
+        $menu = $this->model->find($id);
+        $menu->ingre_menus()->delete();
+        $menu->update($request->all());
+
+        if ($request->photo) {
+            $this->removeImage($menu->image);
+            $request = $this->uploadImage($request);
+        }
+
+
+        for ($i = 0; $i < count($request->ingredient_id); $i++) {
+            $menu->ingre_menus()->create([
+                'ingredient_id' => $request->ingredient_id[$i],
+                'qty' => $request->qty[$i],
+            ]);
+        }
 
         return redirect('/admin/menus');
     }
@@ -100,28 +140,30 @@ class MenuController extends Controller
     public function destroy($id)
     {
         $model = $this->model->find($id);
-
+        $model->ingre_menus()->delete();
         $model->delete();
-        return redirect('/admin/categories');
+        return redirect('/admin/menus');
     }
 
-    public function uploadImage($img){
+    public function uploadImage($request)
+    {
         $img = $request->file('photo');
         $newName = time() . '.' . $img->getClientOriginalExtension();
 
         $img->move($this->imgPath, $newName);
 
         $request->merge([
-            'image' =>$newName,
+            'image' => $newName,
         ]);
 
         return $request;
     }
 
-    public function removeImage($img){
+    public function removeImage($img)
+    {
         $fullPath = $this->imgPath . '/' . $img;
 
-        if ($img && file_exists($fullPath)){
+        if ($img && file_exists($fullPath)) {
             unlink($fullPath);
         }
     }

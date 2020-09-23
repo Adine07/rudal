@@ -15,8 +15,9 @@ class CreateIngredientsTable extends Migration
     {
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('stock');
+            $table->string('ingredient_name');
+            $table->integer('stock')->nullable();
+            $table->string('format')->nullable();
             $table->timestamps();
         });
     }

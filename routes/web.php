@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/admin')->name('admin.')->group(function () {
         Route::resource('/categories', 'CategoryController');
         Route::resource('/menus', 'MenuController');
+        Route::get('/menus/create/ingre/{id}', 'MenuController@ingre');
         Route::resource('/ingredients', 'IngredientController');
         Route::resource('/orders', 'OrderController');
         Route::resource('/users', 'UserController');

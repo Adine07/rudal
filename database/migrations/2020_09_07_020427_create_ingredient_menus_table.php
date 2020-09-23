@@ -17,7 +17,7 @@ class CreateIngredientMenusTable extends Migration
             $table->id();
             $table->foreignId('menu_id');
             $table->foreignId('ingredient_id');
-            $table->integer('qty');
+            $table->integer('qty')->nullable();
             $table->timestamps();
         });
     }

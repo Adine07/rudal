@@ -19,7 +19,6 @@ class CreateOrderDetailsTable extends Migration
             $table->foreignId('order_id');
             $table->integer('qty');
             $table->bigInteger('price');
-            $table->bigInteger('subtotal');
             $table->timestamps();
         });
     }

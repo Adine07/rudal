@@ -27,6 +27,15 @@
                 <p class="card-description"> Create new <code>category</code> for your menus.
                 </p>
                 <hr>
+                @if($errors->any())
+                <hr>
+                <ul>
+                    @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <hr>
+                @endif
                 <form action="/admin/categories" method="post">
                     @csrf
                     <div class="row">

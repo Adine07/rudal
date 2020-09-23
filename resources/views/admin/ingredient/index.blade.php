@@ -33,9 +33,8 @@
                         <tr>
                             <th> No. </th>
                             <th> Menu Name </th>
-                            <th> Status </th>
-                            <th> Price </th>
-                            <th> Details </th>
+                            <th> Stock </th>
+                            <th> Format </th>
                             <th> Actions </th>
                         </tr>
                     </thead>
@@ -43,16 +42,15 @@
                     $no = 1;
                     @endphp
                     <tbody>
-                        @foreach($categories as $category)
+                        @foreach($ingredients as $ingredient)
                         <tr>
                             <td> {{ $no++ }} </td>
-                            <td> {{ $category->name }} </td>
-                            <td> {{ $category->status }} </td>
-                            <td> {{ $category->price }} </td>
-                            <td> {{ $category->image }} </td>
+                            <td> {{ $ingredient->ingredient_name }} </td>
+                            <td> {{ $ingredient->stock }} </td>
+                            <td> {{ $ingredient->format }} </td>
                             <td>
-                                <a href="{{ route('admin.categories.edit', ['category' => $category->id]) }}" class="btn btn-warning btn-sm">Edit</a>
-                                <form class="d-inline-block" action="{{ route('admin.categories.destroy', $category->id) }}" method="post">
+                                <a href="{{ route('admin.ingredients.edit', ['ingredient' => $ingredient->id]) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <form class="d-inline-block" action="{{ route('admin.ingredients.destroy', $ingredient->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm">Delete</button>
