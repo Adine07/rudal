@@ -29,4 +29,9 @@ class Menu extends Model
     {
         return $this->hasMany(IngredientMenu::class);
     }
+
+    public function order_details()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
 }

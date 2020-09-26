@@ -31,9 +31,9 @@
                     </div>
                 </a>
                 <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-                    <a class="dropdown-item" href="#">
-                        <i class="mdi mdi-cached mr-2 text-success"></i>
-                        Activity Log
+                    <a class="dropdown-item" href="{{ route('admin.users.show', auth()->user()->id) }}">
+                        <i class="mdi mdi-account mr-2 text-success"></i>
+                        Profile
                     </a>
                     <div class="dropdown-divider"></div>
                     <form action="/logout" method="post">

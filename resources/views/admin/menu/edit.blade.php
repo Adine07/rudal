@@ -143,7 +143,7 @@
                         </div>
                     </div>
                     <br>
-                    <button class="btn btn-gradient-primary">Create</button>
+                    <button class="btn btn-gradient-primary">Update</button>
                 </form>
             </div>
         </div>
