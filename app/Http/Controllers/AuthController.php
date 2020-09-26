@@ -31,6 +31,7 @@ class AuthController extends Controller
 
         $request->merge([
             'password' => $endcriptPassword,
+            'role' => 'kasir',
         ]);
 
         User::create($request->all());
