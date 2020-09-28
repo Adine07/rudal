@@ -67,7 +67,7 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label style="display:block">Menu</label>
-                                        <select name="item_id[]" class="select" :class="'row' + index" x-model="row.item_id" style="display:none">
+                                        <select name="item_id[]" class="select" :class="'menu' + index" x-model="row.item_id" style="display:none">
                                             <option value="">-- Pilih Menu --</option>
                                             @foreach($menus as $menu)
                                             <option value="{{ $menu->id }}">{{ $menu->name }}</option>
@@ -78,7 +78,7 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label>Quantity</label>
-                                        <input type="number" class="form-control" name="qty[]" x-model="row.qty" x-on:change="setSubtotal(index)">
+                                        <input type="number" class="form-control" :class=" 'qty' + index" name="qty[]" x-model="row.qty" x-on:change="setSubtotal(index)">
                                     </div>
                                 </div>
                                 <div class="col">
@@ -164,10 +164,18 @@
                 $('.select').select2();
 
                 this.rows.forEach((row, index) => {
-                    $('.row' + index).on('select2:select', (e) => {
+                    $('.menu' + index).on('select2:select', (e) => {
                         row.item_id = e.target.value
                         this.setPrice(row.item_id, index)
+                        const menu = menus.find(menu => menu.id == row.item_id)
+                        $(".qty" + index).attr("max", menu.stock)
+                        {{-- console.log(menu) --}}
                     })
+                    @if ($isEdit)
+                        const menu = menus.find(menu => menu.id == row.item_id)
+                        menu.stock = menu.stock + row.qty
+                        $(".qty" + index).attr("max", menu.stock)
+                    @endif
                 })
             },
 
@@ -182,7 +190,7 @@
             },
 
             setPrice(id, index) {
-                    console.log(id);
+                    {{-- console.log(id); --}}
 
                     const menu = menus.find(menu => menu.id == id);
                     const result = menu && menu.price;

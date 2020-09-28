@@ -94,6 +94,12 @@ class OrderController extends Controller
                 'price' => $request->price[$i],
                 'subtotal' => $request->subtotal[$i],
             ]);
+            $menu = Menu::find($request->item_id[$i]);
+            // dd($order);
+            $menu->update([
+                'stock' => $menu->stock - $request->qty[$i],
+                'sold' => $menu->sold + $request->qty[$i],
+            ]);
         }
 
         return redirect(route('admin.orders.index'))->with('update', 'Order updated success fully!');
