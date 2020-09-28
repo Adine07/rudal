@@ -78,7 +78,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row pb-2">
+                        <div class="col-md-4">
+                            <img src="/img/{{$menu->image}}" class="mw-100 w-100 rounded" alt="image">
+                        </div>
                         <div class="col">
                             <div class="form-group">
                                 <label>Upload Image</label>
@@ -142,7 +145,15 @@
                             </div>
                         </div>
                     </div>
-                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="stock">Stock</label>
+                                <input type="number" id="stock" class="form-control" name="stock"
+                                    value="{{ old('stock', $menu->stock) }}" placeholder="menu stock">
+                            </div>
+                        </div>
+                    </div>
                     <button class="btn btn-gradient-primary">Update</button>
                 </form>
             </div>

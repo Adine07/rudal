@@ -59,6 +59,7 @@ class MenuController extends Controller
             'photo' => 'required',
             'ingredient_id' => 'required',
             'qty' => 'required',
+            'stock' => 'required',
         ]);
 
         if ($request->photo) {
@@ -74,7 +75,7 @@ class MenuController extends Controller
             ]);
         }
 
-        return redirect('/admin/menus');
+        return redirect('/admin/menus')->with('status', 'Menu created success fully!');
     }
 
     /**
@@ -109,6 +110,7 @@ class MenuController extends Controller
             'detail' => 'required',
             'ingredient_id' => 'required',
             'qty' => 'required',
+            'stock' => 'required',
         ]);
 
         $menu = $this->model->find($id);
@@ -128,7 +130,7 @@ class MenuController extends Controller
             ]);
         }
 
-        return redirect('/admin/menus');
+        return redirect('/admin/menus')->with('update', 'Menu updated success fully!');
     }
 
     /**
@@ -142,7 +144,7 @@ class MenuController extends Controller
         $model = $this->model->find($id);
         $model->ingre_menus()->delete();
         $model->delete();
-        return redirect('/admin/menus');
+        return redirect('/admin/menus')->with('delete', 'Menu deleted success fully!');
     }
 
     public function uploadImage($request)

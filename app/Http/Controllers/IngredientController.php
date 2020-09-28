@@ -44,13 +44,12 @@ class IngredientController extends Controller
     {
         $request->validate([
             'ingredient_name' => 'required',
-            'stock' => 'required',
             'format' => 'required',
         ]);
 
         $this->model->create($request->all());
 
-        return redirect('/admin/ingredients');
+        return redirect('/admin/ingredients')->with('status', 'Ingredient created success fully!');
     }
 
     /**
@@ -77,13 +76,12 @@ class IngredientController extends Controller
     {
         $request->validate([
             'ingredient_name' => 'required',
-            'stock' => 'required',
             'format' => 'required',
         ]);
 
         $this->model->find($id)->update($request->all());
 
-        return redirect('/admin/ingredients');
+        return redirect('/admin/ingredients')->with('update', 'Ingredient updated success fully!');
     }
 
     /**
@@ -100,9 +98,9 @@ class IngredientController extends Controller
         $a = $a->all();
         if ($a == []) {
             $model->delete();
-            return redirect('/admin/ingredients');
+            return redirect('/admin/ingredients')->with('delete', 'Ingredient deleted success fully!');
         } else {
-            return redirect('/admin/ingredients');
+            return redirect('/admin/ingredients')->with('cant', 'Ingredient used!');
         }
     }
 }

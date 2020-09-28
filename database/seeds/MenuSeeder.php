@@ -17,27 +17,27 @@ class MenuSeeder extends Seeder
         Menu::create([
             'category_id' => '1',
             'name' => 'Ayam Goreng Paha Atas',
-            // 'status' => '1',
+            'stock' => '121',
             'price' => '15000',
-            'image' => 'none-belum ada',
+            'image' => 'ayam.jpeg',
             'detail' => 'lorem ipsum dolor sit, amet?',
         ]);
 
         Menu::create([
             'category_id' => '2',
             'name' => 'Ayam Goreng Dada Atas',
-            // 'status' => '1',
+            'stock' => '122',
             'price' => '15000',
-            'image' => 'none-belum ada',
+            'image' => 'ayam.jpeg',
             'detail' => 'lorem ipsum dolor sit, amet?',
         ]);
 
         Menu::create([
             'category_id' => '3',
             'name' => 'Ayam Goreng Paha bawah',
-            // 'status' => '0',
+            'stock' => '120',
             'price' => '10000',
-            'image' => 'none-belum ada',
+            'image' => 'ayam.jpeg',
             'detail' => 'lorem ipsum dolor sit, amet?',
         ]);
     }

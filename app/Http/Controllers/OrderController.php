@@ -28,11 +28,17 @@ class OrderController extends Controller
     public function create()
     {
         $menus = Menu::all();
+        $menus = $menus->where('stock', '>', '0');
         return view('admin.order.form', compact('menus'));
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'customer_name' => 'required|max:255',
+            'item_id' => 'required',
+            'qty' => 'required',
+        ]);
         $order = Order::create([
             'user_id' => Auth::user()->id,
             'customer_name' => $request->customer_name,
@@ -48,9 +54,14 @@ class OrderController extends Controller
                 'price' => $request->price[$i],
                 'subtotal' => $request->subtotal[$i],
             ]);
+            $menu = Menu::find($request->item_id[$i]);
+            $menu->update([
+                'stock' => $menu->stock - $request->qty[$i],
+                'sold' => $menu->sold + $request->qty[$i],
+            ]);
         }
 
-        return redirect(route('admin.orders.index'));
+        return redirect(route('admin.orders.index'))->with('status', 'Order created success fully!');
     }
 
     public function edit($id)
@@ -63,6 +74,11 @@ class OrderController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'customer_name' => 'required|max:255',
+            'item_id' => 'required',
+            'qty' => 'required',
+        ]);
         $order = Order::find($id);
         $order->order_details()->delete();
 
@@ -80,7 +96,7 @@ class OrderController extends Controller
             ]);
         }
 
-        return redirect(route('admin.orders.index'));
+        return redirect(route('admin.orders.index'))->with('update', 'Order updated success fully!');
     }
 
     public function destroy($id)
@@ -89,6 +105,6 @@ class OrderController extends Controller
         $order->order_details()->delete();
         $order->delete();
 
-        return redirect(route('admin.orders.index'));
+        return redirect(route('admin.orders.index'))->with('delete', 'Order deleted success fully!');
     }
 }

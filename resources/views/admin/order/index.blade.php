@@ -21,6 +21,23 @@
         </ol>
     </nav>
 </div>
+@if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@elseif(session('update'))
+    <div class="alert alert-info">
+        {{ session('update') }}
+    </div>
+@elseif(session('delete'))
+    <div class="alert alert-danger">
+        {{ session('delete') }}
+    </div>
+@elseif(session('cant'))
+    <div class="alert alert-warning">
+        {{ session('cant') }}
+    </div>
+@endif
 <div class="row">
     <div class="col">
         <div class="card">

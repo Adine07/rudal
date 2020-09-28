@@ -57,7 +57,7 @@ class UserController extends Controller
 
         User::create($request->all());
 
-        return redirect('/admin/users');
+        return redirect('/admin/users')->with('status', 'User created success fully!');
     }
 
     /**
@@ -115,7 +115,7 @@ class UserController extends Controller
         ]);
 
         $user->update($request->all());
-        return redirect('/admin/users');
+        return redirect('/admin/users')->with('update', 'User updated success fully!');
     }
 
     /**
@@ -129,6 +129,6 @@ class UserController extends Controller
         $user = $this->model->find($id);
         $user->delete();
 
-        return redirect('/admin/users');
+        return redirect('/admin/users')->with('delete', 'User delete success fully!');
     }
 }

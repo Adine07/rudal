@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Menu extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
-        'category_id', 'name', 'status', 'price', 'image', 'detail',
+        'category_id', 'name', 'stock', 'price', 'image', 'detail', 'sold',
     ];
 
     public function category()

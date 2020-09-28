@@ -51,15 +51,6 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="stock">Stock</label>
-                                <input type="number" id="stock" class="form-control" name="stock"
-                                    value="{{ old('stock', $ingredient->stock) }}" placeholder="Ingredient stock">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
                                 <label for="format">Format ukuran</label>
                                 <input type="text" id="format" class="form-control" name="format"
                                     value="{{ old('format', $ingredient->format) }}" placeholder="Ingredient format">

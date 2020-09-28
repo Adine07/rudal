@@ -55,7 +55,80 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-7 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="clearfix">
+                    <h4 class="card-title float-left">Stock and Items Sold</h4>
+                    <div id="daysold-legend"
+                        class="rounded-legend legend-horizontal legend-top-right float-right"></div>
+                </div>
+                <div id="daysold" class="mt-4"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Categories Menu</h4>
+                <div id="category"></div>
+                <div id="category-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('end-script')
+<!-- Charting library -->
+<script src="https://unpkg.com/chart.js@2.9.3/dist/Chart.min.js"></script>
+<!-- Chartisan -->
+<script src="https://unpkg.com/@chartisan/chartjs@^2.1.0/dist/chartisan_chartjs.umd.js"></script>
+<script>
+    @php
+        $menus = DB::table('menus')->get();
+        $categories = DB::table('categories')->get();
+        // dd($menustock);
+    @endphp
+
+    var chart = new Chartisan({
+        el: '#daysold',
+        data:{
+            chart:{
+                labels:[
+                    @foreach ($menus as $menu )
+                        '{{ $menu->name }}',
+                    @endforeach
+                ]
+            },
+            datasets:[
+                { name: 'Item Stock', values: [@foreach ($menus as $menu) {{$menu->stock}}, @endforeach]},
+                { name: 'Item Sold', values: [@foreach ($menus as $menu) {{$menu->sold}}, @endforeach]},
+            ]
+        },
+        hooks: new ChartisanHooks()
+            .beginAtZero()
+            .colors(),
+    })
+    var chart = new Chartisan({
+        el: '#category',
+        data:{
+            chart:{
+                labels:[
+                    @foreach ($categories as $category )
+                        '{{ $category->name }}',
+                    @endforeach
+                ]
+            },
+            datasets:[
+                @for ($i = 0 ; $i < count($categories) ; $i++)
+                @endfor
+            ]
+        },
+        hooks: new ChartisanHooks()
+            .beginAtZero()
+            .colors(),
+    })
+</script>
 @endsection

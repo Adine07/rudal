@@ -14,9 +14,4 @@ class Ingredient extends Model
     {
         return $this->belongsToMany('App\Models\Menu');
     }
-
-    // public function ingredient_menus()
-    // {
-    //     return $this->hasMany(IngredientMenu::class);
-    // }
 }

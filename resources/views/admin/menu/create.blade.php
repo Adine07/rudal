@@ -141,7 +141,15 @@
                             </div>
                         </div>
                     </div>
-                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="stock">Stock</label>
+                                <input type="number" id="stock" class="form-control" name="stock"
+                                    value="{{ old('stock') }}" placeholder="Menu stock">
+                            </div>
+                        </div>
+                    </div>
                     <button class="btn btn-gradient-primary">Create</button>
                 </form>
             </div>

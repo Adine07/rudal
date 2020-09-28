@@ -48,7 +48,7 @@ class CategoryController extends Controller
 
         $this->model->create($request->all());
 
-        return redirect('/admin/categories');
+        return redirect('/admin/categories')->with('status', 'Categori created success fully!');
     }
 
     /**
@@ -79,7 +79,7 @@ class CategoryController extends Controller
 
         $this->model->find($id)->update($request->all());
 
-        return redirect('/admin/categories');
+        return redirect('/admin/categories')->with('update', 'Categori updated success fully!');
     }
 
     /**
@@ -96,9 +96,9 @@ class CategoryController extends Controller
         $a = $a->all();
         if ($a == []) {
             $model->delete();
-            return redirect('/admin/categories');
+            return redirect('/admin/categories')->with('delete', 'Categori deleted success fully!');
         } else {
-            return redirect('/admin/categories');
+            return redirect('/admin/categories')->with('cant', 'Categori used!');
         }
     }
 }

@@ -21,6 +21,23 @@
         </ol>
     </nav>
 </div>
+@if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@elseif(session('update'))
+    <div class="alert alert-info">
+        {{ session('update') }}
+    </div>
+@elseif(session('delete'))
+    <div class="alert alert-danger">
+        {{ session('delete') }}
+    </div>
+@elseif(session('cant'))
+    <div class="alert alert-warning">
+        {{ session('cant') }}
+    </div>
+@endif
 <div class="row">
     <div class="col">
         <div class="card">
@@ -35,7 +52,7 @@
                             <th> Menu Name </th>
                             <th> Status </th>
                             <th> Price </th>
-                            <th> Details </th>
+                            {{-- <th> Details </th> --}}
                             <th> Actions </th>
                         </tr>
                     </thead>
@@ -47,9 +64,9 @@
                         <tr>
                             <td> {{ $no++ }} </td>
                             <td> {{ $menu->name }} </td>
-                            <td> {{ $menu->status ? 'active' : 'non-active' }} </td>
+                            <td> {{ $menu->stock > 0 ? 'active' : 'non-active' }} </td>
                             <td> {{ $menu->price }} </td>
-                            <td> {{ $menu->image }} </td>
+                            {{-- <td> {{ $menu->image }} </td> --}}
                             <td>
                                 <a href="{{ route('admin.menus.edit', ['menu' => $menu->id]) }}" class="btn btn-warning btn-sm">Edit</a>
                                 <form class="d-inline-block" action="{{ route('admin.menus.destroy', $menu->id) }}" method="post">
